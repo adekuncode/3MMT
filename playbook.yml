@@ -1,0 +1,36 @@
+---
+- name: Copy script to slave, give execution permission, and execute
+  hosts: slave
+  vars:
+    vm_ip: "192.168.20.8"
+  tasks:
+    - name: Copy script to slave
+      copy:
+        src: installer.sh
+        dest: ~/installer.sh
+        mode: "u+x"
+
+    - name: Execute script on slave
+      command: ~/installer.sh
+
+    - name: Confirm PHP application accessibility
+      wait_for:
+        host: "{{ vm_ip }}"
+        port: 80
+        timeout: 60
+        state: started
+
+    - name: Check if PHP application is accessible
+      uri:
+        url: "http://{{ vm_ip }}"
+      register: php_app_response
+
+    - debug:
+        msg: "PHP application is accessible."
+
+    - name: Add cron job for checking server uptime
+      cron:
+        name: Check server uptime
+        minute: 0
+        hour: 0
+        job: /usr/bin/uptime
