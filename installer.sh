@@ -1,5 +1,4 @@
 #!/bin/bash
-
 sudo apt-get update
 sudo apt-get install -y apache2 mysql-server php libapache2-mod-php php-mysql git
 yes | sudo add-apt-repository ppa:ondrej/php
@@ -10,8 +9,8 @@ sudo a2enmod rewrite
 sudo a2enmod php8.3
 sudo service apache2 restart
     MYSQL_COMMANDS=$(cat <<EOF
-    CREATE USER 'victor'@'localhost' IDENTIFIED BY '08108722';
-    GRANT ALL PRIVILEGES ON laraveldb . * TO 'victor'@'localhost';
+    CREATE USER 'adekunle'@'localhost' IDENTIFIED BY '0813001285';
+    GRANT ALL PRIVILEGES ON laraveldb . * TO 'adekunle'@'localhost';
     CREATE DATABASE laraveldb;
     SHOW DATABASES;
     FLUSH PRIVILEGES;
@@ -30,8 +29,8 @@ yes | sudo composer update
 sudo cp .env.example .env
 DB_HOST="localhost"
 DB_DATABASE="laraveldb"
-DB_USERNAME="victor"
-DB_PASSWORD="08108722"
+DB_USERNAME="adekunle"
+DB_PASSWORD="08130001285"
 # Set the path to .env file
 ENV_FILE="/var/www/laravel/.env"
 # Alter the .env file
@@ -50,7 +49,7 @@ sudo chown $USER:$USER laravel.conf
 sudo chmod +w laravel.conf
 sudo cat<<EOF >laravel.conf
     <VirtualHost *:80>
-    ServerName victor@localhost
+    ServerName adekunle@localhost
     DocumentRoot /var/www/laravel/public
 
         <Directory /var/www/laravel/public>
